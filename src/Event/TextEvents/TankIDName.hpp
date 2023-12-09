@@ -1,19 +1,20 @@
 #pragma once
+
 #include <Event/EventType.hpp>
 #include <Packet/TextFunction.hpp>
 #include <Utils/MiscUtils.hpp>
 
-EVENT("requestedName", OnRequestedName) {
+EVENT("tankIDName", TankIDName) {
     if (pAvatar->GetDetail().IsFlagOn(CLIENTFLAG_IS_IN)) {
         CAction::Log(pAvatar->Get(), "`4Warning! `oYou were already logged in?``");
         pAvatar->RequestDisconnect();
         return;
     }
-    if (!pAvatar->GetDetail().Serialize(eventParser, true)) {
+    if (!pAvatar->GetDetail().Serialize(eventParser, false)) {
         pAvatar->RequestDisconnect();
         return;
     }
-    pAvatar->SetRawName(pAvatar->GetDetail().GetRequestedName());
+    pAvatar->SetRawName(pAvatar->GetDetail().GetTankIDName());
 
     if (!Utils::IsValidUsername(pAvatar->GetRawName()) || (pAvatar->GetRawName().length() < 3 || pAvatar->GetRawName().length() > 10)) {
         CAction::Log(pAvatar->Get(), "`4Oops! `oYour name is including invalid characters, please try again.``");
@@ -21,5 +22,5 @@ EVENT("requestedName", OnRequestedName) {
         return;
     }
 
-    pAvatar->PlayerDialog::Send(DIALOG_TYPE_REGISTRATION, TextParse{});
+	CAction::Log(pAvatar->Get(), "`oLogged in `2successfully`o!``");
 }

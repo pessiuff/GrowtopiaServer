@@ -69,7 +69,7 @@ void EventPool::ServicePoll() {
 
         auto* eventFunction = this->GetEventIfExists(eventName);
         if (!eventFunction) {
-            CAction::Log((ENetPeer*)pAvatar, "`oUnhandled Event, eventName(`w{}``) textParse(`w{}``) tankData(`w{}``)``", eventName, eventParser.GetSize(), fmt::ptr(pTankData));
+            CAction::Log(pAvatar->Get(), "`oUnhandled Event, eventName(`w{}``) textParse(`w{}``) tankData(`w{}``)``", eventName, eventParser.GetSize(), fmt::ptr(pTankData));
             continue;
         }
 

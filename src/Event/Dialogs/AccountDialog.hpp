@@ -47,10 +47,10 @@ DIALOG_EVENT("growid_apply", OnDialogGrowIDApply) {
     pAvatar->SetRawName(name);
     //pAvatar->SetUserId(pTable->Insert(pAvatar));
 
-    CAction::PlaySFX((ENetPeer*)pAvatar, "success", 0);
-    VarList::SetHasGrowID((ENetPeer*)pAvatar, true, name, det.GetTankIDPass());
-    VarList::OnConsoleMessage((ENetPeer*)pAvatar, fmt::format("`oA `wGrowID`` with the logon of `w{}`` created. Write it and your password down as the will be required to logon!``", pAvatar->GetRawName()));
-    VarList::OnConsoleMessage((ENetPeer*)pAvatar, fmt::format("`5Welcome to `w{}`5, press `wBack`` and then press `wConnect``, enjoy!", Configuration::GetName()));
+    CAction::PlaySFX(pAvatar->Get(), "success", 0);
+    VarList::SetHasGrowID(pAvatar->Get(), true, name, det.GetTankIDPass());
+    VarList::OnConsoleMessage(pAvatar->Get(), fmt::format("`oA `wGrowID`` with the logon of `w{}`` created. Write it and your password down as the will be required to logon!``", pAvatar->GetRawName()));
+    VarList::OnConsoleMessage(pAvatar->Get(), fmt::format("`5Welcome to `w{}`5, press `wBack`` and then press `wConnect``, enjoy!", Configuration::GetName()));
     //pAvatar->RequestDisconnect();
     Logger::Print(INFO, "We got it?");
 }

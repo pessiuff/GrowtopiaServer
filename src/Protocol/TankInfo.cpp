@@ -71,9 +71,14 @@ std::string TankInfo::GetCountryCode() const {
     return m_countryCode;
 }
 
-bool TankInfo::Serialize(TextParse parser) {
-    if (!this->SetRequestedName(parser.Get("requestedName", 1)) ||
-        !this->SetCountryCode(parser.Get("country", 1)) ||
+bool TankInfo::Serialize(TextParse parser, bool is_guest) {
+    if (is_guest && !this->SetRequestedName(parser.Get("requestedName", 1)))
+        return false;
+    
+    if (!is_guest && !this->SetTankIDName(parser.Get("tankIDName", 1)) && !this->SetTankIDName(parser.Get("tankIDPass", 1)))
+        return false;
+
+    if (!this->SetCountryCode(parser.Get("country", 1)) ||
         !this->SetRelativeId(parser.Get("rid", 1)))
         return false;
 

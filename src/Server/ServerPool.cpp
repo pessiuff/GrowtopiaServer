@@ -107,6 +107,7 @@ void ServerPool::ServicePoll() {
                 case NET_MESSAGE_GENERIC_TEXT:
                 case NET_MESSAGE_GAME_MESSAGE: {
                     auto data = this->DataToString(event.packet->data + sizeof(IPacketType::m_packetType), event.packet->dataLength - sizeof(IPacketType::m_packetType));
+                    Logger::Print(INFO, "Received: {}", data);
                     GetEventPool()->AddQueue(data.substr(0, data.find('|')), pAvatar, pServer, data, TextParse(data), nullptr);
                 } break;
                 default:

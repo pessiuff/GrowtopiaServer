@@ -41,7 +41,7 @@ void HTTPServer::ServicePoll() {
         TextParse parser{};
         parser.Add("server", Configuration::GetBaseHost());
         parser.Add<uint16_t>("port", Configuration::GetBasePort());
-        parser.Add<bool>("type", true);
+        parser.Add<uint16_t>("type", 1);
         parser.Add("#maint", "Server is under maintenance. We will be back online shortly. Thank you for your patience!");
         parser.Add("meta", "0DA34F801AE23F00");
         parser.Add("RTENDMARKERBS1001", "", "");

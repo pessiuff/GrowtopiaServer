@@ -17,7 +17,7 @@ public:
         pConfig->host                = "127.0.0.1";
         pConfig->port                = 3306;
         pConfig->user                = "root";
-        pConfig->password            = "";
+        pConfig->password            = "1234";
         pConfig->database            = "growtopia_server";
         pConfig->auto_reconnect      = true;
         pConfig->debug               = false;

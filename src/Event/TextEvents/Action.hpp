@@ -11,7 +11,7 @@ EVENT("action", OnAction) {
     auto* eventFunction = GetEventPool()->ActionManager::GetEventIfExists(eventName);
 
     if (!eventFunction) {
-        CAction::Log((ENetPeer*)pAvatar, "`oUnhandled TextEvents::OnAction, eventName(`w{}``)``", eventName);
+        CAction::Log(pAvatar->Get(), "`oUnhandled TextEvents::OnAction, eventName(`w{}``)``", eventName);
         return;
     }
     eventFunction->sig_function(pAvatar, pServer, eventData, eventParser, pTankData);

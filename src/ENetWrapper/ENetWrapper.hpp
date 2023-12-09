@@ -60,17 +60,5 @@ namespace ENetWrapper {
     inline void SendVariantList(ENetPeer* peer, VariantList vList) {
         auto vPacket = SVariantPacket(vList);
         ENetWrapper::SendPacket(peer, vPacket);
-        /*auto memoryAlloc = vList.GetMemoryUsage();
-        auto memoryData = vList.Pack();
-
-        TankPacketData* tankPacket = reinterpret_cast<TankPacketData*>(std::malloc(sizeof(TankPacketData) + memoryAlloc));
-        tankPacket->m_type = NET_GAME_PACKET_CALL_FUNCTION;
-        tankPacket->m_flags.bExtended = true;
-        tankPacket->m_netId = vList.netId;
-        tankPacket->m_delay = vList.executionDelay;
-        tankPacket->m_dataLength = static_cast<uint32_t>(memoryAlloc);
-        std::memcpy(reinterpret_cast<uint8_t*>(&tankPacket->m_data), memoryData, memoryAlloc);
-
-        SendPacket(peer, NET_MESSAGE_GAME_PACKET, tankPacket, sizeof(TankPacketData) + tankPacket->m_dataLength); */
     }
 }

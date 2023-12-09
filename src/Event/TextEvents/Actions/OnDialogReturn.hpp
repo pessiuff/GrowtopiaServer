@@ -11,7 +11,7 @@ ACTION_EVENT("dialog_return", OnDialogReturn) {
     auto* eventFunction = GetEventPool()->DialogManager::GetEventIfExists(eventName);
 
     if (!eventFunction) {
-        CAction::Log((ENetPeer*)pAvatar, "`oUnhandled OnAction::OnDialogReturn, eventName(`w{}``)``", eventName);
+        CAction::Log(pAvatar->Get(), "`oUnhandled OnAction::OnDialogReturn, eventName(`w{}``)``", eventName);
         return;
     }
     eventFunction->sig_function(pAvatar, pServer, eventData, eventParser, pTankData);

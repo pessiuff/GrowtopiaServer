@@ -37,7 +37,7 @@ public:
     void SetFlag(eClientFlags flag);
     void RemoveFlag(eClientFlags flag);
 
-    bool Serialize(TextParse parser);
+    bool Serialize(TextParse parser, bool is_guest);
 
     bool SetRequestedName(const std::string& data);
     std::string GetRequestedName() const;

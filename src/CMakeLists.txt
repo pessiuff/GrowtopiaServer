@@ -15,10 +15,29 @@ file(GLOB SOURCE_FILES
     **/**/**/*.cpp
     **/**/**/**/*.cpp
 )
+
 add_executable(${PROJECT_NAME}
     ${INCLUDE_FILES}
     ${SOURCE_FILES}
 )
+
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_SOURCE_DIR}/runtime/cache/items.dat
+                ${CMAKE_CURRENT_BINARY_DIR}/cache/items.dat)
+
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_SOURCE_DIR}/runtime/cache/cert.pem
+                ${CMAKE_CURRENT_BINARY_DIR}/cache/cert.pem)
+
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_SOURCE_DIR}/runtime/cache/key.pem
+                ${CMAKE_CURRENT_BINARY_DIR}/cache/key.pem)
 
 if (MSVC)
     add_definitions(/EHsc)
