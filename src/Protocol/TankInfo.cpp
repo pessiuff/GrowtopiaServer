@@ -75,7 +75,7 @@ bool TankInfo::Serialize(TextParse parser, bool is_guest) {
     if (is_guest && !this->SetRequestedName(parser.Get("requestedName", 1)))
         return false;
     
-    if (!is_guest && !this->SetTankIDName(parser.Get("tankIDName", 1)) && !this->SetTankIDName(parser.Get("tankIDPass", 1)))
+    if (!is_guest && !this->SetTankIDName(parser.Get("tankIDName", 1)) || !this->SetTankIDPass(parser.Get("tankIDPass", 1)))
         return false;
 
     if (!this->SetCountryCode(parser.Get("country", 1)) ||

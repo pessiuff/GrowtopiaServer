@@ -23,6 +23,19 @@ public:
     std::string                 m_data;
 };
 
+struct PlayerLogin {
+public:
+    enum class Result {
+        SUCCESS,
+        INCORRECT_LOGIN,
+        BAD_CONNECTION
+    };
+
+public:
+    PlayerLogin::Result         m_result;
+    std::string                 m_data;
+};
+
 class PlayerTable {
 public:
     PlayerTable(sqlpp::mysql::connection* pConnection);
@@ -34,6 +47,7 @@ public:
     uint32_t Insert(Player* pAvatar);
 
     PlayerRegistration RegisterPlayer(const std::string& name, const std::string& password, const std::string& verifyPassword);
+    PlayerLogin LoginPlayer(Player* pAvatar);
 
 private:
     sqlpp::mysql::connection* m_pConnection;

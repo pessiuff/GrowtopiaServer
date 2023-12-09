@@ -90,11 +90,21 @@ void ServerPool::ServicePoll() {
                 pAvatar->OnConnect();
             } break;
             case ENET_EVENT_TYPE_DISCONNECT: {
-                Player* pAvatar = playerPool->GetPlayer(event.peer->connectID);
+                if (!event.peer->data)
+                    break;
+
+                // ugly but no other choice?
+                std::uint32_t connect_id{};
+                std::memcpy(&connect_id, event.peer->data, sizeof(std::uint32_t));
+                std::free(event.peer->data);
+                event.peer->data = NULL;
+
+                Player* pAvatar = playerPool->GetPlayer(connect_id);
                 if (!pAvatar)
                     break;
+
                 pAvatar->OnDisconnect();
-                playerPool->RemovePlayer(event.peer->connectID);
+                playerPool->RemovePlayer(connect_id);
             } break;
             case ENET_EVENT_TYPE_RECEIVE: {
                 Player* pAvatar = playerPool->GetPlayer(event.peer->connectID);

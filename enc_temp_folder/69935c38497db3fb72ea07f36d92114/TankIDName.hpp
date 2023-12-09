@@ -5,6 +5,7 @@
 #include <Utils/MiscUtils.hpp>
 #include <Manager/Database/Database.hpp>
 #include <fmt/format.h>
+#include <Logger/Logger.hpp>
 
 EVENT("tankIDName", TankIDName) {
     if (pAvatar->GetDetail().IsFlagOn(CLIENTFLAG_IS_IN)) {
@@ -16,6 +17,9 @@ EVENT("tankIDName", TankIDName) {
         pAvatar->RequestDisconnect();
         return;
     }
+
+    Logger::Print(INFO, "Name: {}", eventParser.Get("tankIDName", 1));
+    Logger::Print(INFO, "Pass: {}", eventParser.Get("tankIDPass", 1));
 
     PlayerTable* pTable = (PlayerTable*)GetDatabase()->GetTable(DATABASE_PLAYER_TABLE);
     if (!pTable)

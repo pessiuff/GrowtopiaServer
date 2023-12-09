@@ -53,6 +53,11 @@ namespace Utils {
         }
         return true;
     }
+    inline std::string GetLowerCase(const std::string& data) {
+        std::string result = data;
+        std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+        return result;
+    }
 }
 
 namespace Console {

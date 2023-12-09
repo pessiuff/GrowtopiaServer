@@ -13,13 +13,6 @@ EVENT("requestedName", OnRequestedName) {
         pAvatar->RequestDisconnect();
         return;
     }
-    pAvatar->SetRawName(pAvatar->GetDetail().GetRequestedName());
-
-    if (!Utils::IsValidUsername(pAvatar->GetRawName()) || (pAvatar->GetRawName().length() < 3 || pAvatar->GetRawName().length() > 10)) {
-        CAction::Log(pAvatar->Get(), "`4Oops! `oYour name is including invalid characters, please try again.``");
-        pAvatar->RequestDisconnect();
-        return;
-    }
 
     pAvatar->PlayerDialog::Send(DIALOG_TYPE_REGISTRATION, TextParse{});
 }

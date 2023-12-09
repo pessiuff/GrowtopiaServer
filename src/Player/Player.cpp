@@ -6,7 +6,9 @@
 Player::Player(ENetPeer* peer) : Peer(peer),
     PlayerDialog(peer),
     m_flags(0),
-    m_detail(), m_items(peer) { 
+    m_detail(), m_items(peer) {
+        peer->data = std::malloc(sizeof(uint32_t));
+        memcpy(peer->data, &peer->connectID, sizeof(uint32_t));
 }
 Player::~Player() {
     // TODO
@@ -36,6 +38,13 @@ std::string Player::GetRawName() const {
 }
 void Player::SetRawName(const std::string& name) {
     m_rawName = name;
+}
+
+std::string Player::GetDisplayName() const {
+    return m_displayName;
+}
+void Player::SetDisplayName(const std::string& name) {
+    m_displayName = name;
 }
 
 TankInfo& Player::GetDetail() {

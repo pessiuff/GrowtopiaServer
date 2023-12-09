@@ -5,7 +5,5 @@
 
 ACTION_EVENT("quit", Quit) {
 	// idk?
-	if (pAvatar->GetDetail().IsFlagOn(CLIENTFLAG_IS_IN)) {
-		pAvatar->RequestDisconnect();
-	}
+	pAvatar->RequestDisconnect();
 }

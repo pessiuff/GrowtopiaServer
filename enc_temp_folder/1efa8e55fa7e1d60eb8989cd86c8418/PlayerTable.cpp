@@ -2,6 +2,8 @@
 #include <fmt/core.h>
 #include <Manager/Database/Interface/PlayerInterface.hpp>
 #include <Utils/MiscUtils.hpp>
+#include <cstring>
+#include <Logger/Logger.hpp>
 
 PlayerTable::PlayerTable(sqlpp::mysql::connection* pConnection) : m_pConnection(pConnection) {}
 
@@ -85,6 +87,7 @@ PlayerLogin PlayerTable::LoginPlayer(Player* pAvatar)
 {
     std::string name = Utils::GetLowerCase(pAvatar->GetDetail().GetTankIDName());
     std::string password = pAvatar->GetDetail().GetTankIDPass();
+    Logger::Print(INFO, "Pass: {}", password);
 
     PlayerDB playerData{};
     bool login_success = false;

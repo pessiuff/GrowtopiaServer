@@ -27,6 +27,9 @@ public:
     std::string GetRawName() const;
     void SetRawName(const std::string& name);
 
+    std::string GetDisplayName() const;
+    void SetDisplayName(const std::string& name);
+
 public:
     TankInfo& GetDetail();
     PlayerItems* GetItems();
