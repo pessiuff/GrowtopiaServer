@@ -5,3 +5,4 @@ backups/
 build/
 cmake-build-debug/
 CMakeSettings.json
+enc_temp_folder/
