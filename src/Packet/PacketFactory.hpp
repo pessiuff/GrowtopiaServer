@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <memory>
 #include <Packet/GameUpdatePacket.hpp>
 #include <Packet/VariantList.hpp>
 #include <Utils/BinaryWriter.hpp>
@@ -61,6 +62,21 @@ public:
 
 private:
     VariantList m_vList;
+};
+
+class SItemDataUpdatePacket : public STankPacket {
+public:
+    SItemDataUpdatePacket(std::vector<uint8_t> data) : STankPacket(TankPacketData()) {
+        m_tankData.m_type = NET_GAME_PACKET_SEND_ITEM_DATABASE_DATA;
+        m_tankData.m_flags.bExtended = true;
+        m_tankData.m_netId = -1;
+        m_tankData.m_dataLength = data.size();
+
+        m_data.reserve(m_tankData.m_dataLength);
+        std::memcpy(m_data.data(), data.data(), m_tankData.m_dataLength);
+
+        STankPacket::Pack();
+    }
 };
 
 /*

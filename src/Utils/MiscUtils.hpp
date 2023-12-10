@@ -4,13 +4,6 @@
 #include <cstdio>
 #include <string>
 #include <string_view>
-#ifdef __linux__
-    // Linux Includes
-#elif _WIN32
-#include <winsock.h>
-
-#define HOST_NAME_MAX       128
-#endif
 #include <enet/enet.h>
 #include <Packet/GameUpdatePacket.hpp>
 #include <Packet/VariantList.hpp>
@@ -58,43 +51,14 @@ namespace Utils {
         std::transform(result.begin(), result.end(), result.begin(), ::tolower);
         return result;
     }
-}
+    inline uint32_t GetProtonHash(const void* data, std::size_t data_len) {
+        if (!data) return 0;
+        uint32_t hash = 0x55555555;
 
-namespace Console {
-    inline std::string Execute(std::string command) {
-    #ifdef __linux__
-        std::array<char, 128> buffer;
-        std::string result{};
+        for (std::size_t i = 0; i < data_len; ++i)
+            hash = (hash >> 27) + (hash << 5) + static_cast<const uint8_t*>(data)[i];
 
-        auto pipe = popen(command.c_str(), "r"); 
-        if (!pipe)
-            return std::string{ "N/A" };
-
-        while (!feof(pipe)) {
-            if (fgets(buffer.data(), 128, pipe) != nullptr)
-                result += buffer.data();
-        }
-
-        pclose(pipe);
-        return result;
-    #else
-        return std::string{}; //unimplemented
-    #endif
-    }
-    inline std::string GetHostname() {
-        std::array<char, HOST_NAME_MAX> buffer{};
-        gethostname(buffer.data(), HOST_NAME_MAX);
-        return std::string{ buffer.data() };
-    }
-    inline std::string GetLoadAverage() {
-    #ifdef __linux__
-        std::array<double, 3> buffer{};
-        if(getloadavg(buffer.data(), 3) < 3) 
-            return std::string{ "00.00 00.00 00.00" };
-        return fmt::format("{} {} {}", fmt::format("{:.{}f}", buffer[0], 2), fmt::format("{:.{}f}", buffer[1], 2), fmt::format("{:.{}f}", buffer[2], 2));
-    #else
-        return std::string{ "00.00 00.00 00.00" };
-    #endif
+        return hash;
     }
 }
 

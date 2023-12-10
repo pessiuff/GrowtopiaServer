@@ -16,5 +16,6 @@
 #include <Event/TextEvents/Actions/OnDialogReturn.hpp>
 #include <Event/TextEvents/Actions/EnterGame.hpp>
 #include <Event/TextEvents/Actions/Quit.hpp>
+#include <Event/TextEvents/Actions/RefreshItemData.hpp>
 
 #include <Event/Dialogs/AccountDialog.hpp>

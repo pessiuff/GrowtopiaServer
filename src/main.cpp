@@ -72,23 +72,6 @@ int main(int argc, char* argv[]) {
             data.resize(data.length() - 1);
             Logger::Print(INFO, data);
         } break;
-        case "hwinfo"_fnv: {
-            std::string 
-                username = Console::Execute("whoami"),
-                threadsUsage = Console::Execute(fmt::format("ps huH p {} | wc -l", ::getpid()));
-            username.resize(username.length() - 1);
-            threadsUsage.resize(threadsUsage.length() - 1);
-
-            std::string data{ fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Hardware Information\n") };
-            data.append(fmt::format("{}: {}\n", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Hostname"), Console::GetHostname()))
-                .append(fmt::format("{}: {}\n", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Username"), username))
-                .append(fmt::format("{}: {}\n", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Process Id"), ::getpid()))
-                .append(fmt::format("{}: {}\n", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Thread Concurrency"), std::thread::hardware_concurrency()))
-                .append(fmt::format("{}: {}\n", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Threads Used"), threadsUsage))
-                .append(fmt::format("{}: {}\n", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "CPU Load"), Console::GetLoadAverage()));
-            data.resize(data.length() - 1);
-            Logger::Print(INFO, data);
-        } break;
         default:
             break;
         }

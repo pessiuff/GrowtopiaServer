@@ -15,9 +15,13 @@ bool ItemManager::Serialize() {
     if (!itemData.data() || itemData.empty())
         return false;
 
+    m_data = itemData;
+
     BinaryReader br(itemData.data());
     m_version = br.Read<uint16_t>();
     m_itemCount = br.Read<uint32_t>();
+
+    m_hash = Utils::GetProtonHash(itemData.data(), itemData.size());
 
     m_items.reserve(m_itemCount);
     for (auto index = 0; index < m_itemCount; index++) {
@@ -66,3 +70,9 @@ std::vector<ItemInfo*> ItemManager::GetItems() {
 size_t ItemManager::GetItemsLoaded() {
     return m_items.size();
 }
+
+uint32_t ItemManager::GetHash() {
+    return m_hash;
+}
+
+
