@@ -28,11 +28,13 @@ bool ItemManager::Serialize() {
         auto* item = m_items.emplace_back(new ItemInfo{});
         item->Serialize(br);
 
-        if (index != item->m_Id)
-            break; //Unsupported Items.dat
+        if (index != item->m_Id) {
+        	Logger::Print(WARNING, "{} >> Incorrect item entry found. ID: {}", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "ItemManager"), item->m_Id);
+            break;
+        }
     }
 
-    Logger::Print(INFO, "{} >> Serialized items.dat with {} items loaded.", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "ItemManager"), this->GetItemsLoaded());
+    Logger::Print(INFO, "{} >> Serialized items.dat (Version {}) with {} items loaded.", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "ItemManager"), m_version, this->GetItemsLoaded());
     return true;
 }
 void ItemManager::Encode() {

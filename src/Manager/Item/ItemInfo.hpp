@@ -74,8 +74,12 @@ struct ItemInfo {
     uint32_t m_unknownVal4 = 0;
     uint32_t m_unknownVal5 = 0;
 
+    std::string m_sitPath = "";
+    std::string m_unknownTexturePath = "";
+
     uint8_t m_bodypart[9] = { 0 };
     uint8_t m_reserved[80] = { 0 };
+    uint8_t m_reserved2[25] = { 0 };
 
     bool m_hasExtra = false;
     CL_Vec2<uint8_t> m_defaultTexture = CL_Vec2<uint8_t>{ 0, 0 };
@@ -114,6 +118,8 @@ struct ItemInfo {
         ret += 80;
         ret += sizeof(uint16_t) + m_punchOptions.size();
         ret += 21;
+        ret += 25;
+        ret += 4;
         return ret;
     }
     void Pack(BinaryWriter& buffer) {
@@ -173,8 +179,15 @@ struct ItemInfo {
 
         for (auto index = 0; index < 9; index++)
             buffer.Write<uint8_t>(m_bodypart[index]);
+
         buffer.Write<uint32_t>(m_unknownVal4);
         buffer.Write<uint32_t>(m_unknownVal5);
+
+        for (auto index = 0; index < 25; index++)
+            buffer.Write<uint8_t>(m_reserved2[index]);
+
+        buffer.Write(m_sitPath);
+        buffer.Write(m_unknownTexturePath);
     }
     void Serialize(BinaryReader& br) {
         m_Id = br.Read<uint32_t>();
@@ -229,10 +242,18 @@ struct ItemInfo {
         
         m_punchOptions = br.ReadStringU16();
         m_unknownVal3 = br.Read<uint32_t>();
+
         for (auto index = 0; index < 9; index++)
             m_bodypart[index] = br.Read<uint8_t>();
+
         m_unknownVal4 = br.Read<uint32_t>();
         m_unknownVal5 = br.Read<uint32_t>();
+
+        for (auto index = 0; index < 25; index++)
+            m_reserved2[index] = br.Read<uint8_t>();
+
+        m_sitPath = br.ReadStringU16();
+        m_unknownTexturePath = br.ReadStringU16();
 
         switch (m_spreadType) {
             case TILESPREAD_DIRECT8:

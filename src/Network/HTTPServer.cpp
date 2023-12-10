@@ -10,7 +10,7 @@ HTTPServer* GetHTTP() {
 
 bool HTTPServer::Listen() {
     Logger::Print(INFO, "Starting {}, binding port to server", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "HTTP Server")); 
-    m_pServer = std::make_unique<httplib::SSLServer>("./cache/cert.pem", "./cache/key.pem");
+    m_pServer = std::make_unique<httplib::SSLServer>("./https/cert.pem", "./https/key.pem");
 
     if (!m_pServer->bind_to_port("0.0.0.0", 443)) {
         Logger::Print(EXCEPTION, "Failed to bind port 443 to HTTP Server.");
@@ -47,5 +47,12 @@ void HTTPServer::ServicePoll() {
         parser.Add("RTENDMARKERBS1001", "", "");
         response.set_content(parser.GetAsString(), "text/html");
     });
+
+    auto mount_point_result = m_pServer->set_mount_point("/cache", "./cache");
+    if (!mount_point_result) {
+        // The specified base directory doesn't exist...
+        Logger::Print(EXCEPTION, "Failed to mount cache directory to HTTP Server.");
+    }
+
     m_pServer->listen_after_bind();
 }

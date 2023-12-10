@@ -30,14 +30,14 @@ add_custom_command(
 add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_SOURCE_DIR}/runtime/cache/cert.pem
-                ${CMAKE_CURRENT_BINARY_DIR}/cache/cert.pem)
+                ${CMAKE_SOURCE_DIR}/runtime/https/cert.pem
+                ${CMAKE_CURRENT_BINARY_DIR}/https/cert.pem)
 
 add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_SOURCE_DIR}/runtime/cache/key.pem
-                ${CMAKE_CURRENT_BINARY_DIR}/cache/key.pem)
+                ${CMAKE_SOURCE_DIR}/runtime/https/key.pem
+                ${CMAKE_CURRENT_BINARY_DIR}/https/key.pem)
 
 if (MSVC)
     add_definitions(/EHsc)
