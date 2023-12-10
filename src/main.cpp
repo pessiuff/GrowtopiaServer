@@ -3,6 +3,7 @@
 #include <fmt/color.h>
 #include <Logger/Logger.hpp>
 #include <Manager/Item/ItemManager.hpp>
+#include <Manager/PlayerTribute/PlayerTributeManager.hpp>
 #include <Manager/Database/Database.hpp>
 #include <Network/HTTPServer.hpp>
 #include <Event/EventPool.hpp>
@@ -31,7 +32,8 @@ int main(int argc, char* argv[]) {
     if (!GetItemManager()->Serialize()) {
         Logger::Print(EXCEPTION, "{} >> failed to load items.dat, please make sure the file is on /cache", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "ItemManager"));
         return EXIT_FAILURE;
-    }  
+    }
+    GetPlayerTributeManager()->Build();
 
     Logger::Print(INFO, "Initializing {} and registering events...", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "Event Pool"));
     GetEventPool()->RegisterEvents();

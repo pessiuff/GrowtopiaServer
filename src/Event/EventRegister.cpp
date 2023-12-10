@@ -17,5 +17,6 @@
 #include <Event/TextEvents/Actions/EnterGame.hpp>
 #include <Event/TextEvents/Actions/Quit.hpp>
 #include <Event/TextEvents/Actions/RefreshItemData.hpp>
+#include <Event/TextEvents/Actions/RefreshPlayerTributeData.hpp>
 
 #include <Event/Dialogs/AccountDialog.hpp>

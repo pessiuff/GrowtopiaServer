@@ -26,7 +26,6 @@ public:
 
 private:
     std::vector<uint8_t> m_data;
-    size_t m_size;
 
     uint16_t m_version;
     uint32_t m_itemCount;

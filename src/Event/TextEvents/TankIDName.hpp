@@ -6,6 +6,7 @@
 #include <Utils/MiscUtils.hpp>
 #include <Manager/Database/Database.hpp>
 #include <Manager/Item/ItemManager.hpp>
+#include <Manager/PlayerTribute/PlayerTributeManager.hpp>
 
 
 EVENT("tankIDName", TankIDName) {
@@ -37,7 +38,7 @@ EVENT("tankIDName", TankIDName) {
         "0098/64054304/cache/",
         "cc.cz.madkite.freedom org.aqua.gg idv.aqua.bulldog com.cih.gamecih2 com.cih.gamecih com.cih.game_cih cn.maocai.gamekiller com.gmd.speedtime org.dax.attack com.x0.strai.frep com.x0.strai.free org.cheatengine.cegui org.sbtools.gamehack com.skgames.traffikrider org.sbtoods.gamehaca com.skype.ralder org.cheatengine.cegui.xx.multi1458919170111 com.prohiro.macro me.autotouch.autotouch com.cygery.repetitouch.free com.cygery.repetitouch.pro com.proziro.zacro com.slash.gamebuster",
         "proto=200|choosemusic=audio/mp3/about_theme.mp3|active_holiday=0|wing_week_day=0|ubi_week_day=0|server_tick=356207141|clash_active=0|drop_lavacheck_faster=1|isPayingUser=0|usingStoreNavigation=1|enableInventoryTab=1|bigBackpack=1|",
-        654171113);
+        GetPlayerTributeManager()->GetHash());
 
 	CAction::Log(pAvatar->Get(), "`oLogged in `2successfully`o!``");
 }

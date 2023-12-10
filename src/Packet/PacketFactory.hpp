@@ -79,6 +79,21 @@ public:
     }
 };
 
+class SPlayerTributeUpdatePacket : public STankPacket {
+public:
+    SPlayerTributeUpdatePacket(uint8_t* data, uint32_t size) : STankPacket(TankPacketData()) {
+        m_tankData.m_type = NET_GAME_PACKET_SEND_PLAYER_TRIBUTE_DATA;
+        m_tankData.m_flags.bExtended = true;
+        m_tankData.m_netId = -1;
+        m_tankData.m_dataLength = size;
+
+        m_data.reserve(m_tankData.m_dataLength);
+        std::memcpy(m_data.data(), &data, m_tankData.m_dataLength);
+
+        STankPacket::Pack();
+    }
+};
+
 /*
     PACKETS
 */
