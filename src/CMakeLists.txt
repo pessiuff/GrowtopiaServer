@@ -2,11 +2,11 @@ project(server LANGUAGES CXX)
 set(CMAKE_BUILD_TYPE Debug)
 
 file(GLOB INCLUDE_FILES
-    *.h
-    **/*.h
-    **/**/*.h
-    **/**/**/*.h
-    **/**/**/**/*.h
+    *.hpp
+    **/*.hpp
+    **/**/*.hpp
+    **/**/**/*.hpp
+    **/**/**/**/*.hpp
 )
 file(GLOB SOURCE_FILES
     *.cpp
@@ -19,6 +19,7 @@ file(GLOB SOURCE_FILES
 add_executable(${PROJECT_NAME}
     ${INCLUDE_FILES}
     ${SOURCE_FILES}
+        Event/TextEvents/Actions/QuitToExit.hpp
 )
 
 add_custom_command(

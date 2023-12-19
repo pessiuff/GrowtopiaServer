@@ -18,5 +18,7 @@
 #include <Event/TextEvents/Actions/Quit.hpp>
 #include <Event/TextEvents/Actions/RefreshItemData.hpp>
 #include <Event/TextEvents/Actions/RefreshPlayerTributeData.hpp>
+#include <Event/TextEvents/Actions/JoinRequest.hpp>
+#include <Event/TextEvents/Actions/QuitToExit.hpp>
 
 #include <Event/Dialogs/AccountDialog.hpp>

@@ -40,8 +40,8 @@ DIALOG_EVENT("growid_apply", OnDialogGrowIDApply) {
     det.SetTankIDName(name);
     det.SetTankIDPass(password);
 
-    pItems->AddItem(ITEM_MY_FIRST_WORLD_LOCK,   1);
-    pItems->AddItem(ITEM_PICKAXE,               1);
+    pItems->AddItem(Item::MY_FIRST_WORLD_LOCK,   1);
+    pItems->AddItem(Item::PICKAXE,               1);
     
     pAvatar->SetUserId(pTable->Insert(pAvatar));
 

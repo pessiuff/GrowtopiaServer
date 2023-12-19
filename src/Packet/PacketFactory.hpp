@@ -5,6 +5,8 @@
 #include <Packet/GameUpdatePacket.hpp>
 #include <Packet/VariantList.hpp>
 #include <Utils/BinaryWriter.hpp>
+#include <Logger/Logger.hpp>
+#include <Player/Player.hpp>
 
 class IPacketType {
 public:
@@ -88,7 +90,59 @@ public:
         m_tankData.m_dataLength = size;
 
         m_data.reserve(m_tankData.m_dataLength);
-        std::memcpy(m_data.data(), &data, m_tankData.m_dataLength);
+        std::memcpy(m_data.data(), data, m_tankData.m_dataLength);
+
+        STankPacket::Pack();
+    }
+};
+
+class SSendMapDataPacket : public STankPacket {
+public:
+    SSendMapDataPacket(uint8_t* data, size_t size) : STankPacket(TankPacketData()) {
+        m_tankData.m_type = NET_GAME_PACKET_SEND_MAP_DATA;
+        m_tankData.m_flags.bExtended = true;
+        m_tankData.m_netId = -1;
+        m_tankData.m_dataLength = static_cast<uint32_t>(size);
+
+        m_data.reserve(m_tankData.m_dataLength);
+        std::memcpy(m_data.data(), data, m_tankData.m_dataLength);
+
+        STankPacket::Pack();
+    }
+};
+
+class SSendInventoryStatePacket : public STankPacket {
+public:
+    SSendInventoryStatePacket(std::vector<uint8_t> data) : STankPacket(TankPacketData()) {
+        m_tankData.m_type = NET_GAME_PACKET_SEND_INVENTORY_STATE;
+        m_tankData.m_flags.bExtended = true;
+        m_tankData.m_netId = -1;
+        m_tankData.m_dataLength = static_cast<uint32_t>(data.size());
+
+        m_data.reserve(m_tankData.m_dataLength);
+        std::memcpy(m_data.data(), data.data(), m_tankData.m_dataLength);
+
+        STankPacket::Pack();
+    }
+};
+
+class SSetCharacterState : public STankPacket {
+public:
+    SSetCharacterState(Player* player) : STankPacket(TankPacketData()) {
+        m_tankData.m_type = NET_GAME_PACKET_SET_CHARACTER_STATE;
+        m_tankData.m_netId = player->GetNetId();
+        m_tankData.m_punchIndex = player->GetPunchID();
+        m_tankData.m_buildRange = player->GetBuildRange();
+        m_tankData.m_punchRange = player->GetPunchRange();
+        m_tankData.m_waterSpeed = player->GetWaterSpeed();
+        m_tankData.m_effectFlags = player->GetFlags();
+        m_tankData.m_acceleration = player->GetAcceleration();
+        m_tankData.m_punchStrength = player->GetPunchStrength();
+        m_tankData.m_speedOut = player->GetSpeed();
+        m_tankData.m_gravityOut = player->GetGravity();
+        m_tankData.m_pupilColor = player->GetPupilColor().GetInt();
+        m_tankData.m_hairColor = player->GetHairColor().GetInt();
+        m_tankData.m_eyesColor = player->GetEyesColor().GetInt();
 
         STankPacket::Pack();
     }

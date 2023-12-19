@@ -8,6 +8,7 @@
 
 ACTION_EVENT("refresh_item_data", RefreshItemData) {
 	CAction::Log(pAvatar->Get(), "`oOne moment, updating item data...``");
+	pAvatar->GetDetail().SetFlag(CLIENTFLAG_UPDATING_ITEMS);
 	auto packet_tank = SItemDataUpdatePacket(GetItemManager()->GetData());
 	ENetWrapper::SendPacket(pAvatar->Get(), packet_tank);
 }

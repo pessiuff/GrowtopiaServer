@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <Utils/Math.hpp>
+#include <Utils/Rect.hpp>
 
 class TextParse {
 public:
@@ -28,6 +30,21 @@ public:
     template <typename T, typename std::enable_if_t<std::is_integral_v<T> || std::is_floating_point_v<T>, bool> = true>
     void Add(const std::string& key, const T& value, const std::string& token = "|") {
         this->Add(key, std::to_string(value), token);
+    }
+    void Add(const std::string& key, const CL_Vec2<int>& value, const std::string& token = "|") {
+        std::string data {
+            std::to_string(value.X) + "|" + std::to_string(value.Y)
+        };
+
+        this->Add(key, data, token);
+    }
+    void Add(const std::string& key, const _CL_Recti& value, const std::string& token = "|") {
+        std::string data{
+            std::to_string(value.x) + "|" + std::to_string(value.y) + "|" +
+            std::to_string(value.width) + "|" + std::to_string(value.height)
+        };
+
+        this->Add(key, data, token);
     }
 
     void Set(const std::string& key, const std::string& value, const std::string& token = "|");

@@ -4,6 +4,13 @@
 #include <enet/enet.h>
 #include <Manager/Item/ItemType.hpp>
 #include <Utils/Color.hpp>
+#include <memory>
+#include <vector>
+
+enum eInventoryItemFlags {
+    INVENTORY_ITEM_FLAGS_NONE = 0,
+    INVENTORY_ITEM_FLAGS_ACTIVATED = (1 << 0)
+};
 
 class PlayerItems {
 public:
@@ -20,7 +27,9 @@ public:
     
     Color GetSkinColor() const;
 
-    bool AddItem(uint16_t itemId, uint8_t count, bool sendPacket = false);
+    bool AddItem(uint16_t itemId, uint8_t count);
+
+    std::vector<uint8_t> Serialize() const;
     
 private:
     ENetPeer* m_pPeer;

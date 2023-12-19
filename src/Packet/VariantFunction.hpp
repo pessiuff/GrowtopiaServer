@@ -1,6 +1,9 @@
 #pragma once
 #include <ENetWrapper/ENetWrapper.hpp>
 #include <Packet/VariantList.hpp>
+#include <Utils/TextParse.hpp>
+#include <Utils/Math.hpp>
+#include <Manager/Item/ItemType.hpp>
 
 class VarList {
 public:
@@ -37,6 +40,45 @@ public:
         vList.Insert(tankIDName);
         vList.Insert(tankIDPass);
         
+        ENetWrapper::SendVariantList(peer, vList);
+        return vList;
+    }
+    static VariantList OnRequestWorldSelectMenu(ENetPeer* peer, std::string data, int32_t delayMS = 0) {
+        auto vList = VariantList::Create(__func__, delayMS);
+        vList.Insert(data);
+
+        ENetWrapper::SendVariantList(peer, vList);
+        return vList;
+    }
+    static VariantList OnFailedToEnterWorld(ENetPeer* peer, bool value, int32_t delayMS = 0) {
+        auto vList = VariantList::Create(__func__, delayMS);
+        vList.Insert(value ? 1: 0);
+
+        ENetWrapper::SendVariantList(peer, vList);
+        return vList;
+    }
+    static VariantList OnSpawn(ENetPeer* peer, TextParse data, int32_t delayMS = 0) {
+        auto vList = VariantList::Create(__func__, delayMS);
+        vList.Insert(data.GetAsString());
+
+        ENetWrapper::SendVariantList(peer, vList);
+        return vList;
+    }
+    static VariantList OnSetClothing(ENetPeer* peer, std::array<uint16_t, NUM_BODY_PARTS> cloth, const Color color, bool sound, uint32_t net_id, int32_t delayMS = 0) {
+        auto vList = VariantList::Create(__func__, delayMS, net_id);
+        vList.Insert(CL_Vec3<float> { static_cast<float>(cloth[CLOTHTYPE_HAIR]), static_cast<float>(cloth[CLOTHTYPE_SHIRT]), static_cast<float>(cloth[CLOTHTYPE_PANTS]) });
+        vList.Insert(CL_Vec3<float> { static_cast<float>(cloth[CLOTHTYPE_FEET]), static_cast<float>(cloth[CLOTHTYPE_FACE]), static_cast<float>(cloth[CLOTHTYPE_HAND]) });
+        vList.Insert(CL_Vec3<float> { static_cast<float>(cloth[CLOTHTYPE_BACK]), static_cast<float>(cloth[CLOTHTYPE_MASK]), static_cast<float>(cloth[CLOTHTYPE_NECKLACE]) });
+        vList.Insert(color.GetInt());
+        vList.Insert(CL_Vec3<float> { static_cast<float>(cloth[CLOTHTYPE_ANCES]), static_cast<float>(sound), static_cast<float>(0) });
+
+        ENetWrapper::SendVariantList(peer, vList);
+        return vList;
+    }
+    static VariantList OnRemove(ENetPeer* peer, uint16_t netId, int32_t delayMS = 0) {
+        auto vList = VariantList::Create(__func__, delayMS);
+        vList.Insert("netID|" + netId);
+
         ENetWrapper::SendVariantList(peer, vList);
         return vList;
     }

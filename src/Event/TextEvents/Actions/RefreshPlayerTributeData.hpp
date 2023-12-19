@@ -6,6 +6,7 @@
 #include <Packet/PacketFactory.hpp>
 
 ACTION_EVENT("refresh_player_tribute_data", RefreshPlayerTributeData) {
+	pAvatar->GetDetail().SetFlag(CLIENTFLAG_UPDATING_TRIBUTE);
 	auto packet_tank = SPlayerTributeUpdatePacket(GetPlayerTributeManager()->GetData(), GetPlayerTributeManager()->GetSize());
 	ENetWrapper::SendPacket(pAvatar->Get(), packet_tank);
 }
