@@ -8,7 +8,7 @@ public:
     static std::string GetName()     {   return "Growtopia Server";     }
     static std::string GetVersion()  {   return "0.0.1";                }
 
-    static std::string GetBaseHost() {   return "127.0.0.1";            }
+    static std::string GetBaseHost() {   return "192.168.0.13";         }
     static uint16_t GetBasePort()    {   return 16000;                  }
 
 public:

@@ -77,7 +77,7 @@ public:
     }
     static VariantList OnRemove(ENetPeer* peer, uint16_t netId, int32_t delayMS = 0) {
         auto vList = VariantList::Create(__func__, delayMS);
-        vList.Insert("netID|" + netId);
+        vList.Insert(fmt::format("netID|{}", netId));
 
         ENetWrapper::SendVariantList(peer, vList);
         return vList;

@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+// TODO: Rewrite binary writer and binary reader to make it work faster
 class BinaryReader {
 public:
     template <typename T>

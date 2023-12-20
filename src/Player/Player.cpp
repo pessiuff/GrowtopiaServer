@@ -42,18 +42,8 @@ void Player::SetUserId(const uint32_t& userId) {
     m_userId = userId;
 }
 
-std::string Player::GetRawName() const {
-    return m_rawName;
-}
-void Player::SetRawName(const std::string& name) {
-    m_rawName = name;
-}
-
 std::string Player::GetDisplayName() const {
-    return m_displayName;
-}
-void Player::SetDisplayName(const std::string& name) {
-    m_displayName = name;
+    return fmt::format("{} `w(`2{}`w)``", m_detail.GetTankIDName(), m_netId);
 }
 
 std::string Player::GetWorld() const {

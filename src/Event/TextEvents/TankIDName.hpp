@@ -30,6 +30,7 @@ EVENT("tankIDName", TankIDName) {
         return;
     }
 
+    pAvatar->SetUserId(pTable->GetPlayerID(pAvatar->GetDetail().GetTankIDName()));
     pAvatar->GetDetail().SetFlag(CLIENTFLAG_LOGGED_ON);
 
     VarList::OnSuperMain(pAvatar->Get(),

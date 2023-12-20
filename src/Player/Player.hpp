@@ -28,9 +28,6 @@ public:
     uint32_t GetUserId() const;
     void SetUserId(const uint32_t& userId);
 
-    std::string GetRawName() const;
-    void SetRawName(const std::string& name);
-
     std::string GetDisplayName() const;
     void SetDisplayName(const std::string& name);
 
@@ -64,7 +61,6 @@ private:
     uint32_t m_userId;
     uint32_t m_flags;
 
-    std::string m_rawName;
     std::string m_displayName;
 
     std::string m_emailAddress;

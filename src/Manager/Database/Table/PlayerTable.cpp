@@ -5,12 +5,23 @@
 
 PlayerTable::PlayerTable(sqlpp::mysql::connection* pConnection) : m_pConnection(pConnection) {}
 
+uint32_t PlayerTable::GetPlayerID(const std::string& name) const {
+    PlayerDB playerData{};
+    for (const auto& row : (*m_pConnection)(select(all_of(playerData)).from(playerData).where(
+        playerData.tankIdName != std::string{}
+        ))) {
+        if (row._is_valid && Utils::GetLowerCase(row.tankIdName) == Utils::GetLowerCase(name))
+            return row.Id;
+    }
+    return -1;
+}
+
 bool PlayerTable::IsAccountExist(const std::string& name) const {
     PlayerDB playerData{};
     for (const auto &row : (*m_pConnection)(select(all_of(playerData)).from(playerData).where(
-        playerData.tankIdName == Utils::GetLowerCase(name) && playerData.tankIdName != std::string{}
+        playerData.tankIdName != std::string{}
     ))) {
-        if (row._is_valid)
+        if (row._is_valid && Utils::GetLowerCase(row.tankIdName) == Utils::GetLowerCase(name))
             return true;
     }
     return false;
@@ -23,11 +34,11 @@ uint32_t PlayerTable::Insert(Player* pAvatar) {
         return 0;
     PlayerDB playerData{};
     return (uint32_t)((*m_pConnection)(insert_into(playerData).set(
-        playerData.tankIdName = Utils::GetLowerCase(det.GetTankIDName()),
-        playerData.tankIdPass = det.GetTankIDPass(),
-        playerData.rawName = det.GetTankIDName(),
+        playerData.tankIdName = det.GetTankIDName(),
+        playerData.tankIdPass = det.GetTankIDPass()
+        /*playerData.rawName = det.GetTankIDName(),
         playerData.displayName = det.GetTankIDName()
-        /*layerData.relative_identifier = login->m_rid,
+        playerData.relative_identifier = login->m_rid,
         playerData.machine_address = login->m_mac,
         playerData.role = player->GetRole(),
         playerData.inventory = player->Pack(PLAYER_DATA_INVENTORY),
@@ -86,14 +97,14 @@ PlayerLogin PlayerTable::LoginPlayer(Player* pAvatar)
     std::string name = Utils::GetLowerCase(pAvatar->GetDetail().GetTankIDName());
     std::string password = pAvatar->GetDetail().GetTankIDPass();
 
-    PlayerDB playerData{};
+    PlayerDB playerData { };
     bool login_success = false;
     for (const auto& row : (*m_pConnection)(select(all_of(playerData)).from(playerData).where(
-        playerData.tankIdName == name && playerData.tankIdPass == password && playerData.rawName != std::string{} && playerData.displayName != std::string{}
+        playerData.tankIdPass == password
         ))) {
+        std::string db_name = row.tankIdName;
+        if (Utils::GetLowerCase(db_name) != name) continue;
         login_success = true;
-        pAvatar->SetRawName(row.rawName);
-        pAvatar->SetDisplayName(row.displayName);
     }
 
     if (!login_success)

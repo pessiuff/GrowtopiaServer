@@ -42,6 +42,7 @@ public:
     ~PlayerTable() = default;
 
 public:
+    uint32_t GetPlayerID(const std::string& name) const;
     bool IsAccountExist(const std::string& name) const;
 
     uint32_t Insert(Player* pAvatar);

@@ -4,6 +4,8 @@
 #include <cstring>
 #include <fmt/core.h>
 
+
+// TODO: Rewrite binary writer and binary reader to make it work faster
 class BinaryWriter {
 public:
     template <typename T>

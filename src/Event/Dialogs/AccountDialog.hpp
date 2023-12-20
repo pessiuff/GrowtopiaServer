@@ -32,21 +32,14 @@ DIALOG_EVENT("growid_apply", OnDialogGrowIDApply) {
         }));
         return;
     }
-
-    TankInfo& det = pAvatar->GetDetail();
-    PlayerItems* pItems = pAvatar->GetItems();
-
-    pAvatar->SetRawName(name);
-    det.SetTankIDName(name);
-    det.SetTankIDPass(password);
-
-    pItems->AddItem(Item::MY_FIRST_WORLD_LOCK,   1);
-    pItems->AddItem(Item::PICKAXE,               1);
     
-    pAvatar->SetUserId(pTable->Insert(pAvatar));
+    pAvatar->GetDetail().SetTankIDName(name);
+    pAvatar->GetDetail().SetTankIDPass(password);
+
+    pTable->Insert(pAvatar);
 
     CAction::PlaySFX(pAvatar->Get(), "success", 0);
-    VarList::SetHasGrowID(pAvatar->Get(), true, name, det.GetTankIDPass());
+    VarList::SetHasGrowID(pAvatar->Get(), true, name, password);
     VarList::OnConsoleMessage(pAvatar->Get(), fmt::format("`oA `wGrowID`` with the logon of `w{}`` created. Write it and your password down as the will be required to logon!``", pAvatar->GetDetail().GetTankIDName()));
     VarList::OnConsoleMessage(pAvatar->Get(), fmt::format("`5Welcome to `w{}`5, press `wBack`` and then press `wConnect``, enjoy!", Configuration::GetName()));
     pAvatar->RequestDisconnect();

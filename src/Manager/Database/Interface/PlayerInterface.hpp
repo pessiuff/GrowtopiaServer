@@ -44,41 +44,13 @@ namespace PlayerInterface {
         };
         using _traits = ::sqlpp::make_traits<::sqlpp::varchar>;
     };
-    struct RawName {
-        struct _alias_t {
-            static constexpr const char _literal[] = "RawName";
-            using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;
-            template <typename T>
-            struct _member_t {
-                T rawName;
-                T& operator()() { return rawName; }
-                const T& operator()() const { return rawName; }
-            };
-        };
-        using _traits = ::sqlpp::make_traits<::sqlpp::varchar>;
-    };
-    struct DisplayName {
-        struct _alias_t {
-            static constexpr const char _literal[] = "DisplayName";
-            using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;
-            template <typename T>
-            struct _member_t {
-                T displayName;
-                T& operator()() { return displayName; }
-                const T& operator()() const { return displayName; }
-            };
-        };
-        using _traits = ::sqlpp::make_traits<::sqlpp::varchar>;
-    };
 }
 
-struct PlayerDB 
+struct PlayerDB
 : sqlpp::table_t<PlayerDB,
     PlayerInterface::ID,
     PlayerInterface::TankIDName,
-    PlayerInterface::TankIDPass,
-    PlayerInterface::RawName,
-    PlayerInterface::DisplayName> {
+    PlayerInterface::TankIDPass> {
     struct _alias_t {
         static constexpr const char _literal[] = "Players";
         using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;
