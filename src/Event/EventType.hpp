@@ -44,5 +44,13 @@
     } eventName ## _dialogEvent;                                                                \
     void eventName ##::Run(EventArguments)                                                      \
 
-typedef std::pair<std::string, std::tuple<EventDataType>>   EventData;
-typedef sigslot::signal<EventDataType>                      EventSignal;
+#define TANK_EVENT(event, eventName)	                                                        \
+    class eventName ## {                                                                        \
+    public:                                                                                     \
+        static void Run(EventArguments);                                                        \
+        eventName ##() { GetEventPool()->AddEvent(event, eventName ##::Run); }     \
+    } eventName ## _tankEvent;                                                                  \
+    void eventName ##::Run(EventArguments)                                                      \
+
+typedef std::pair<std::string, std::tuple<EventDataType>>      EventData;
+typedef sigslot::signal<EventDataType>                         EventSignal;

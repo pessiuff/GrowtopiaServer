@@ -119,7 +119,19 @@ void ServerPool::ServicePoll() {
                     auto data = this->DataToString(event.packet->data + sizeof(IPacketType::m_packetType), event.packet->dataLength - sizeof(IPacketType::m_packetType));
                     Logger::Print(INFO, "Received: {}", data);
                     GetEventPool()->AddQueue(data.substr(0, data.find('|')), pAvatar, pServer, data, TextParse(data), nullptr);
-                } break;
+                    break;
+                }
+                case NET_MESSAGE_GAME_PACKET: {
+                    if (event.packet->dataLength < sizeof(TankPacketData) + 4) return enet_peer_disconnect_now(event.peer, 0);
+                    auto packet = reinterpret_cast<TankPacketData*>(event.packet->data + 4);
+                    std::string type = "UNKNOWN";
+                    switch (packet->m_type) {
+                        case NET_GAME_PACKET_STATE: { type = "OnMovement"; } break;
+                        default: {} break;
+                    }
+                    GetEventPool()->AddQueue(type, pAvatar, pServer, "", TextParse(""), packet);
+                    break;
+                }
                 default:
                     break;
                 }

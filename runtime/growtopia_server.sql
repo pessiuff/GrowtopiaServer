@@ -12,20 +12,14 @@
  File Encoding         : 65001
 
  Date: 25/02/2023 20:51:45
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+*/ SET NAMES utf8mb4; SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for players
 -- ----------------------------
 DROP TABLE IF EXISTS `players`;
-CREATE TABLE `players`  (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `TankIDName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `TankIDPass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
-SET FOREIGN_KEY_CHECKS = 1;
+CREATE TABLE `players` (
+ `ID` INT NOT NULL AUTO_INCREMENT,
+ `TankIDName` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+ `TankIDPass` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, PRIMARY KEY (`ID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic; SET FOREIGN_KEY_CHECKS = 1;

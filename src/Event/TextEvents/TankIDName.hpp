@@ -10,7 +10,7 @@
 
 
 EVENT("tankIDName", TankIDName) {
-    if (pAvatar->GetDetail().IsFlagOn(CLIENTFLAG_IS_IN)) {
+    if (pAvatar->GetDetail().IsFlagOn(CLIENTFLAG_IS_IN) || pAvatar->GetDetail().IsFlagOn(CLIENTFLAG_LOGGED_ON)) {
         CAction::Log(pAvatar->Get(), "`4Warning! `oYou were already logged in?``");
         pAvatar->RequestDisconnect();
         return;

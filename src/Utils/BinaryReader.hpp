@@ -10,7 +10,7 @@ public:
     template <typename T>
     T Read() {
         T val;
-        std::memcpy(&val, m_pData + m_position, sizeof(T));
+		std::memcpy(&val, m_pData + m_position, sizeof(T));
         m_position += sizeof(T);
         return val;
     }

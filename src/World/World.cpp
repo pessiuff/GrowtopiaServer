@@ -97,6 +97,9 @@ uint32_t World::AddPlayer(Player* player) {
 
 void World::RemovePlayer(Player* player) {
 	m_players.erase(player->GetNetId());
+
+	if (m_players.empty()) // not neccessary but why not
+		m_netID = 0;
 }
 
 bool World::HasPlayer(Player* player) {
@@ -158,7 +161,7 @@ uint8_t* World::Serialize() const {
 	BinaryWriter buffer{ alloc };
 
 	std::memset(buffer.Get(), 0, alloc);
-	buffer.Write<uint16_t>(0xF);
+	buffer.Write<uint16_t>(0x11);
 	buffer.Write<uint32_t>(0);
 	buffer.Write(m_name, sizeof(uint16_t));
 	buffer.Write<uint32_t>(m_width);

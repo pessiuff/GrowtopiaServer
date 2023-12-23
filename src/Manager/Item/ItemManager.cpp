@@ -17,6 +17,8 @@ bool ItemManager::Serialize() {
 
     m_data = itemData;
 
+    auto start = std::chrono::high_resolution_clock::now();
+
     BinaryReader br(itemData.data());
     m_version = br.Read<uint16_t>();
     m_itemCount = br.Read<uint32_t>();
@@ -34,7 +36,9 @@ bool ItemManager::Serialize() {
         }
     }
 
-    Logger::Print(INFO, "{} >> Serialized items.dat (Version {}) with {} items loaded.", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "ItemManager"), m_version, this->GetItemsLoaded());
+    auto end = std::chrono::high_resolution_clock::now();
+
+    Logger::Print(INFO, "{} >> Serialized items.dat ({}ms elapsed) (Version {}) with {} items loaded.", fmt::format(fmt::emphasis::bold | fg(fmt::color::cornsilk), "ItemManager"), std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(), m_version, this->GetItemsLoaded());
     return true;
 }
 void ItemManager::Encode() {

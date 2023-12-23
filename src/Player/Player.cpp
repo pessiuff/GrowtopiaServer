@@ -43,7 +43,7 @@ void Player::SetUserId(const uint32_t& userId) {
 }
 
 std::string Player::GetDisplayName() const {
-    return fmt::format("{} `w(`2{}`w)``", m_detail.GetTankIDName(), m_netId);
+    return fmt::format("{} `w(`2{}`w)``", m_detail.GetTankIDName(), m_world == "EXIT" ? 0 : m_netId);
 }
 
 std::string Player::GetWorld() const {

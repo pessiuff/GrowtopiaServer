@@ -22,3 +22,5 @@
 #include <Event/TextEvents/Actions/QuitToExit.hpp>
 
 #include <Event/Dialogs/AccountDialog.hpp>
+
+#include <Event/Tank/OnMovement.hpp>

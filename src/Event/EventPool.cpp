@@ -44,6 +44,9 @@ EventObject* EventPool::GetEvent(const std::string &keyName) {
 }
 
 void EventPool::AddQueue(const std::string& eventName, EventArguments) {
+    if (eventName == "UNKNOWN")
+        return;
+
     EventData data{ eventName, { pAvatar, pServer, eventData, eventParser, pTankData }};
     m_workerQueue.push_back(std::move(data));
 }
@@ -57,6 +60,7 @@ void EventPool::ServicePoll() {
     while (true) {
         if (m_workerQueue.empty())
             continue;
+
         auto& pairData = m_workerQueue.front();
         std::string                 eventName = pairData.first;
         std::tuple<EventDataType>   tupleData = pairData.second;
@@ -68,6 +72,7 @@ void EventPool::ServicePoll() {
         TankPacketData*         pTankData   = std::get<4>(tupleData);
 
         auto* eventFunction = this->GetEventIfExists(eventName);
+       
         if (!eventFunction) {
             CAction::Log(pAvatar->Get(), "`oUnhandled Event, eventName(`w{}``) textParse(`w{}``) tankData(`w{}``)``", eventName, eventParser.GetSize(), fmt::ptr(pTankData));
             continue;

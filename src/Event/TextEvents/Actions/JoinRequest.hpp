@@ -63,7 +63,7 @@ ACTION_EVENT("join_request", JoinRequest) {
 	pAvatar->SendCharacterState(pAvatar);
 
 	world->Broadcast([&](Player* target) {
-		if (target->GetNetId() == pAvatar->GetNetId()) {
+		if (target->GetUserId() == pAvatar->GetUserId()) {
 			return;
 		}
 
